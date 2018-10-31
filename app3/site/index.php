@@ -3,14 +3,20 @@
 $user = 'root';
 $password = 'root';
 
-mysqli_connect("db", "root", "erp") or die(mysqli_error());
+try {
 
-$dbh = new PDO(
-	'mysql:host=db;port=9906;dbname=erp', 
-	$user, 
-	$password
-);
+	$dbh = new PDO(
+		'mysql:host=db;port=3306;dbname=erp',
+		$user,
+		$password
+	);
 
-foreach ($dbh->query('SELECT * from companies') as $row) {
-    print_r($row);
+	foreach ($dbh->query('SELECT * FROM companies') as $row) {
+		echo("[{$row['id']}] => {$row['name']}<br>");
+	}
+
+} catch (Exception $ex) {
+
+	echo('Error: '.$ex->getMessage());
+	exit;
 }
